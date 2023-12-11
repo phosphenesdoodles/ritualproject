@@ -1,0 +1,248 @@
+<!doctype html>
+<html>
+<head>  
+<meta charset="utf-8">
+<title>Interactive Map</title>
+	
+<style type="text/css">
+
+@font-face{
+	font-family:titlefont;	
+	src: url("pixel.TTF");
+}
+
+#title{
+		font-family:titlefont;
+}
+@font-face{
+	font-family:bodyfont;
+	src: url("Cardinal.ttf");
+		
+}
+	#info_box{ 
+		font-family:bodyfont;}
+
+.starcolor{
+   color:#D90567;   
+   cursor:pointer;
+   text-shadow:3px 3px 5px #000000;
+   font-size:24px;
+}    
+    
+.starcolor:hover{
+   color:#DFA30C;
+}
+   
+.maptext{
+    font-size:14px; 
+    font-weight:bold;
+    text-shadow:3px 3px 5px #000000;
+    color:#ffffff;"
+}
+
+.landmark_pic{
+	
+}
+
+.landmark_pic:hover{
+	width:60px;
+}
+
+
+</style>
+	
+<script type="text/javascript">
+
+
+var place_info_array = new Array();
+place_info_array[0] = "";
+place_info_array[1] = "The Serenitea Pot is an item gifted to the Traveler (the player) by an adeptus, an illuminated being, named Madame Ping.The purpose of the teapot is to serve as a customizable living space. When surveyed, about 30% of the Genshin players surveyed said they have used the Serenitea Pot as a location for a wishing ritual. A potential reason why this is a popular location for wishing is that it allows for players to put objects in specific orientation. <br><br>Example from survey: 'Build a wish area in my pot, ask my friend with that character to enter, drink holy water, and as they use their burst I pull'";
+place_info_array[2] = "The Watasumi Shrine is located in Inazuma. The head priestess of the shrine is Sanganomiya Kokomi. When surveyed, about 39% of players surveyed said they've wished here. In my experience, I remember chosing this shrine as a location for a wishing ritual for two characters: Sanganomiya Kokomi and Gorou. These two characters have significant story ties to this location. This, combined with religious significance the shrine holds, makes it a spot prone to wishing rituals.";
+place_info_array[3] = "The Jade Chamber is a floating palace built by Lady Ningguang. It is demolished at the end of Liyue chapter of the main storyline, when Ningguang drops it onto a vengeful god in order to protect Liyue. It is rebuilt canonically over a year later. This is a popular wishing spot due to its high location and its ties to sacrifice. A common part of ritual performed at the Jade Chamber is sacrifice, where players will purposefully jump of the ledge, killing their character, who is usually a character the desired character dislikes or has issues with.";
+place_info_array[4] = "The Sanctuary of Surasthana is located in Sumeru, and is where the Dendro God, Nahida, was locked up in for over 400 years before the Traveler freed her. This is the only location mentioned as a wishing spot by the playerbase that is in the newer regions, Sumeru and Fontaine. Its ties with divinity, as well as its story significance, is likely what makes it a desirable wishing location. A survey participate mentioned this location specifically when describing a wishing ritual for the character Wanderer, likely because this is where Wanderer receives a new name.";
+place_info_array[5] = "The Alcor is a ship owned by Captain Beidou of the Crux Fleet. The story significance of this ship is that it is the vessel that transports us from Liyue into Inazuma. When talking about wishing rituals performed at this location, it is usually for the character Kazuha, a fugitive from Inazuma who stowed away on the Alcor. I have a personal experience wishing for Kazuha on the crow's nest of the ship, where I got extremely lucky and obtained Kazuha and another 5-star, Jean, in relatively very few wishes. ";
+place_info_array[6] = "The Grand Narukami Shrine is a very popular location for wishing rituals. When surveyed, about 54% of players said that they've wished here. The shrine's is the location of several rituals performed in the story, and is home to its head priestess Yae Miko. A major draw of the Narukami shrine is that there is a game mechanic where you can draw a daily fortune slip at the shrine. Players often do this before wishing at the shrine as a way to predict their luck. <br><br> <img src=fortune.png width='250px'> ";
+place_info_array[7] = "The statue of the Anemo God, Venti, is likely the most iconic spot when discussing wishing rituals in Genshin Impact. When surveyed, over 70% of the players have wished at this statue. A lot of factors likely play a part in the significance of this location. One facter may be the fact that the statue is interactable, allowing the players to perch on the edge of the hands. Another is its religious importance in the game, as well as its elevatd location, making a common place to perform sacrifice rituals. It's prevelance of being a wishing ritual location could also be tied to its physical location. Located in Mondstadt City, the first major city the Traveler visits, it holds importance as the first religiously significant structure the Traveler encounters in the game. Unsuprisingly, Venti is the mostly commonly wished for character at this location.";
+place_info_array[8] = "The Wangshu Inn is an inn located halfway between Mondstadt and Liyue Harbour. Storywise, the inn doesn't hold much significance outside of it being the residence of Xiao, an adeptus and highlyy desired 5 star character. Most rituals performed here are for Xiao. I personally have performed a wishing ritual here for Xiao, but did not end up getting him at this location.";
+place_info_array[9] = "Mt. Aozang is home to an adeptus known as Cloud Retainer. It has been depicted in the story as a common meeting spot for the adepti and Rex Lapis, the Geo archon, for millenia. It has an interactable table in the center of the lake, known to be used by Rex Lapis. This, combined with its elevation and seclusion, makes it a popular wishing spot.";
+place_info_array[10] ="The Divine Nail is a mysterious ruin located in the center of Dragonspine. At one point, it was the tallest point the players could reach. It is believed to be a piece of Celestia, the game equivalent of heaven, that fell from the sky. I hypothesize that its connection with Celestia and elevation is what makes it a popular wishing location.";
+
+
+var images_array = new Array();
+images_array[0] = "";
+images_array[1] = "teapot.jpeg";
+images_array[2] = "watatsumi.png";
+images_array[3] = "Jade_chamber.png";
+images_array[4] = "Surasthana.png";
+images_array[5] = "Alcor.png";;
+images_array[6] = "Grand_Narukami_Shrine.png";
+images_array[7] = "Anemo_Archon_Statue.png";
+images_array[8] = "Wangshu_Inn.png";
+images_array[9] = "Mt._Aocang.png";
+images_array[10] = "Restored_Skyfrost_Nail.png";
+    
+    
+    
+
+
+    
+/* THIS IS THE MAIN ONE I AM USING FOR THE INFO PANEL */
+
+function showPlaceInfo(n){
+	document.getElementById("content_div").innerHTML = "<br>Info for Location<br><br><input type='button' value='' onclick='showImage(" + n + ");' style='background-color:#AAA049; width:130px; height:22px;'><br><br>" + place_info_array[n] + "<br><br><img src='" + images_array[n] + "'width='250px'>";
+    
+}
+
+function showImage(n){
+    document.getElementById("content_div").innerHTML = "<img src='" + Animal_images_arrayd[n] + "'width='250px'>";
+}
+    
+function showLandmarkInfo(n){
+	document.getElementById("info_box").innerHTML = landmark_info_array[n];
+	
+}
+
+function mouseoverColor(n){
+	document.getElementById("box_" + n).style.borderColor = "#DFA30C";
+	if(place_flags_array[n] == 1){
+		clickColor(n);
+	}
+}
+
+function mouseoffColor(n){
+	if(place_flags_array[n] == 0){
+		document.getElementById("box_" + n).style.borderColor = "#D90567";
+	}
+}
+	
+function clickColor(n){
+	document.getElementById("box_" + n).style.borderColor = "#820263";
+	place_flags_array[n] = 1;
+}
+
+var inhab_flag = 1;
+
+function toggleInhabitants(){
+    if(inhab_flag == 1){
+        for(var n=1; n<place_info_array.length; n++){
+            document.getElementById("box_" + n).style.visibility = "hidden";
+            document.getElementById("span_" + n).style.visibility = "hidden";
+        }
+        inhab_flag = 0;
+    }
+    else if(inhab_flag == 0){
+        for(var n=1; n<place_info_array.length; n++){
+            document.getElementById("box_" + n).style.visibility = "visible";
+            document.getElementById("box_" + n).style.borderColor = "red";
+            document.getElementById("span_" + n).style.visibility = "visible";
+        }
+        inhab_flag = 1;
+    }
+}
+
+var place_flag = 1;
+    
+function togglePlaces(){
+    if(place_flag == 1){
+        for(var n=1; n<place_info_array.length; n++){
+            document.getElementById("span_" + (n + 10)).style.visibility = "hidden";
+        }
+        place_flag = 0;
+    }
+    else if(place_flag == 0){
+        for(var n=1; n<place_info_array.length; n++){
+            document.getElementById("span_" + (n + 10)).style.visibility = "visible";
+        }
+        place_flag = 1;
+    }
+}
+    
+var landmark_flag = 1;
+    
+function toggleLandmarks(){
+    if(landmark_flag == 1){
+        for(var n=1; n<place_info_array.length; n++){
+            document.getElementById("span_" + (n + 20)).style.visibility = "hidden";
+        }
+        landmark_flag = 0;
+    }
+    else if(landmark_flag == 0){
+        for(var n=1; n<place_info_array.length; n++){
+            document.getElementById("span_" + (n + 20)).style.visibility = "visible";
+        }
+        landmark_flag = 1;
+    }
+}
+    
+</script>	
+	
+</head>
+
+<body>
+	
+<div id="maindiv" style="position:absolute; top:10px; left:80px; width:1200px; z-index:22; background-color:yellow;">
+    
+	
+        
+	<div id="title" style="position:absolute; left:20px; top:5px; width:1200px; height:130px; line-height:160px; vertical-align:60px; font-size:80px; background-color:#FFFFFF;text-align: center; z-index:10; letter-spacing:5px; color:#000000;"> Wishing Rituals In</div>
+        
+    <div id="flag_div" style="position:absolute; left:1240px; top:5px; width:275px; height:160px;"><img src="GI_logo.png" width="275px"></div>
+	
+	<img src="map.png" width="1200px" style="position:absolute; top:178px; left:20px;">
+		
+    <div id="button_box" style="position:absolute; top:180px; left:1225px"><img src="Serenitea_Pot.png" top= "180px" width="275px"></div>
+    
+	
+ <span id="span_11" style="position:absolute; top:250px; left:1300px;"onclick="javascript:showPlaceInfo(1);javascript:showImage(1)"><span class="starcolor">&#9729;</span><span class="maptext">Serenitea Pot</span></span>
+	
+ <span id="span_12" style="position:absolute; top:920px; left:750px;"onclick="javascript:showPlaceInfo(2)"><span class="starcolor">&#9729;</span><span  class="maptext">Watasumi Shrine</span></span>  
+  
+ <span id="span_13" style="position:absolute; top:640px; left:600px;"onclick="javascript:showPlaceInfo(3)"><span class="starcolor">&#9729;</span><span  class="maptext">Jade Chamber</span></span>       
+                                                                                                                                                
+ <span id="span_14" style="position:absolute; top:600px; left:420px;"onclick="javascript:showPlaceInfo(4)"><span class="starcolor">&#9729;</span><span  class="maptext">Sanctuary of Surasthana</span></span>       
+                                                                                                                                                
+ <span id="span_15" style="position:absolute; top:600px; left:780px;"onclick="javascript:showPlaceInfo(5)"><span class="starcolor">&#9729;</span><span  class="maptext">The Alcor</span></span> 
+
+<span id="span_16" style="position:absolute; top:800px; left:1100px"onclick="javascript:showPlaceInfo(6)"><span class="starcolor">&#9729;</span><span class="maptext">Grand Narukami Shrine</span></span>
+	
+ <span id="span_17" style="position:absolute; top:349px; left:752px;"onclick="javascript:showPlaceInfo(7)"><span class="starcolor">&#9729;</span><span  class="maptext">Venti Statue</span></span>  
+  
+ <span id="span_18" style="position:absolute; top:480px; left:650px;"onclick="javascript:showPlaceInfo(8)"><span class="starcolor">&#9729;</span><span  class="maptext">Wangshu Inn</span></span>       
+                                                                                                                                                
+ <span id="span_19" style="position:absolute; top:456px; left:525px;"onclick="javascript:showPlaceInfo(9)"><span class="starcolor">&#9729;</span><span  class="maptext">Mt. Aozang</span></span>       
+                                                                                                                                                
+ <span id="span_20" style="position:absolute; top:460px; left:765px;"onclick="javascript:showPlaceInfo(10)"><span class="starcolor">&#9729;</span><span  class="maptext">The Divine Nail</span></span> 
+
+                                                                                                                                                                                                                                                                                                                                                                                                         
+ <!-- END INTERACTIVE STAR AREA USING CLASSES FOR PLACES -->
+			
+<!-- BEGIN INTERACTIVE COMPASS AREA FOR LANDMARKS -->
+        
+
+
+<!-- END INTERACTIVE COMPASS AREA FOR LANDMARKS -->
+        
+	<!-- BEGIN INFO DISPLAY AREA -->
+	
+	
+	<div id="info_box" style="position:absolute; top:420px; left:1225px; width:275px; height:615px; padding:10px; background-color:#D90567;"><div id="content_div" style="position:absolute; top:10px; text-align:center; width:255px; height:575px; z-index:20; overflow:auto; background-color:#DFA30C; padding:10px;"><br><span style="font-weight:600; font-size:22px; ">Introduction to Wishing Rituals in Genshin Impact</span><br><br><img src="genshin.jpeg" width="250px" height="150px"><br><br><span style="color:#D90567;">&#x022C7; &#x0291C; &#x0227A; ~ &#x0227B; &#x0291B; &#x022C7;</span><br><br> Genshin Impact is an open-world ARPG that was released in 2020. The player plays as the Traveler as they set forth on a journey across a fantasy land known as Teyvat in search for their lost sibling. The player has the option to collect and manage different characters the Traveler encounters on their journey and add them to the player party.
+ 
+ <br><br>
+A major component of Genshin Impact is wishing for new characters. However, rare characters are difficult to get, and the wishes used to get the characters are scarce. Therefore, many people come up with rituals to perform before wishing, although there’s no actual correlation between wishing rituals and luck. The game’s code already has a set probability of obtaining certain characters, such as 0.6% per wish for five stars, the highest value.  Interestingly, these made-up rituals in a virtual world mimic many motifs found in rituals in the real world. Oftentimes, people chose locations that are high up, or have connections with the game’s divinity. Food is also a common motif, where players may choose to make or consume foods related to the character they are wishing for. Another is sacrifice. Sometimes it is consuming a rare item beforehand and sometimes it is human sacrifice. Music is also a common component in wishing rituals, such as playing a character’s theme song. And finally, time can play a part in wishing rituals when players set their in-game time to a certain time, like midnight or sunset.
+ <br><br>
+For the experimental part of my project, I conducted a survey about wishing rituals. With the data I gathered, I've included 10 spots in Genshin Impact commonly used as wishing locations. I also included some of my own experiences as well as specific experiences of others. 
+ <br><br>
+Click on the clouds to view information about each location. 
+
+
+
+
+    </div>
+    </div> 
+        
+	<!-- END INFO DISPLAY AREA -->
+        
+</div>
+    
+</body>
+</html>
